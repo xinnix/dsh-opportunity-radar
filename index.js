@@ -1,7 +1,7 @@
 /** Host half: slash command, read-only report archive routes for the sidebar panel. */
 import { readFileSync } from 'node:fs';
 
-const NAME = '@local/opportunity-radar';
+const NAME = '@xinnix/dsh-opportunity-radar';
 
 function loadWorkflow() {
   try {

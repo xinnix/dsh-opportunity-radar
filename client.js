@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-  id: '@local/opportunity-radar',
+  id: '@xinnix/dsh-opportunity-radar',
   factory(require) {
     const React = require('react');
     const h = React.createElement;
@@ -31,40 +31,153 @@ const ARCHIVE = [
     },
     "candidates": [
       {
-        "code": "C",
+        "id": "C",
         "name": "社群需求雷达",
-        "score": 19,
-        "verdict": "优先验证"
+        "verdict": "优先验证",
+        "product": "按平台/关键词持续扫描社群，从真实求助帖里发现可产品化的需求，并给出可行性初判。",
+        "why": "开发者社群求助信号真实、付费方与痛点承受者为同一人；与本体插件同源能力可复用。",
+        "risk": "样本偏向开发者社群；社区讨论热度不等于付费意愿，需访谈二次验证。",
+        "scores": {
+          "demand": 5,
+          "competition": 4,
+          "feasibility": 4,
+          "monetization": 3,
+          "solo": 4
+        },
+        "score": 20,
+        "evidence": [
+          {
+            "platform": "V2EX",
+            "url": "https://www.v2ex.com/go/create",
+            "note": "分享创造节点持续出现自建小工具"
+          },
+          {
+            "platform": "Indie Hackers",
+            "url": "https://www.indiehackers.com/",
+            "note": "有产品没付费客户是高频抱怨"
+          }
+        ],
+        "status": "scored"
       },
       {
-        "code": "A",
+        "id": "A",
         "name": "邮件送达诊断",
+        "verdict": "轻量 MVP",
+        "product": "检查域名 SPF/DKIM/DMARC 与发信配置，诊断注册/验证邮件为何收不到。",
+        "why": "独立开发者不懂邮件送达 DNS 配置，出问题无从下手，痛点具体。",
+        "risk": "已有 MXToolbox 等成熟免费替代；差异化需靠'中文向导+一键修复建议'。",
+        "scores": {
+          "demand": 4,
+          "competition": 3,
+          "feasibility": 5,
+          "monetization": 2,
+          "solo": 5
+        },
         "score": 19,
-        "verdict": "轻量 MVP"
+        "evidence": [
+          {
+            "platform": "V2EX",
+            "url": "https://www.v2ex.com/t/1255322",
+            "note": "用户反馈一周收不到注册邮件，换 SMTP 也不行"
+          }
+        ],
+        "status": "scored"
       },
       {
-        "code": "F",
+        "id": "F",
         "name": "服务 + 工具组合",
-        "score": 21,
-        "verdict": "验证路径"
+        "verdict": "验证路径",
+        "product": "先用人工代做交付商机调研/诊断，再把重复环节沉淀成工具，服务带工具订阅。",
+        "why": "人工交付能最快验证付费意愿，工具沉淀构建长期壁垒，符合'慢就是快'。",
+        "risk": "人力交付不可规模化；需明确哪些环节留人工、哪些自动化。",
+        "scores": {
+          "demand": 4,
+          "competition": 4,
+          "feasibility": 3,
+          "monetization": 5,
+          "solo": 3
+        },
+        "score": 19,
+        "evidence": [
+          {
+            "platform": "Indie Hackers",
+            "url": "https://www.indiehackers.com/",
+            "note": "多位作者主张先人工交付再让用户付费"
+          }
+        ],
+        "status": "discovered"
       },
       {
-        "code": "E",
+        "id": "E",
         "name": "轻量转化漏斗",
+        "verdict": "先访谈",
+        "product": "给个人/小团队一个极轻的转化漏斗，看清用户在哪一步流失。",
+        "why": "有开发者'28 次下载 0 销售'却看不出流失点，主流工具偏重。",
+        "risk": "可能只是个别样本；埋点与隐私合规是前置成本。",
+        "scores": {
+          "demand": 3,
+          "competition": 3,
+          "feasibility": 3,
+          "monetization": 3,
+          "solo": 4
+        },
         "score": 16,
-        "verdict": "先访谈"
+        "evidence": [
+          {
+            "platform": "Indie Hackers",
+            "url": "https://www.indiehackers.com/",
+            "note": "28 次下载、0 销售，看不出流失环节"
+          }
+        ],
+        "status": "discovered"
       },
       {
-        "code": "B",
+        "id": "B",
         "name": "隐私 API 客户端",
+        "verdict": "找差异化再说",
+        "product": "不联网、无账号、无遥测、可迁移的 API 调试工具。",
+        "why": "Postman 代理请求引发隐私担忧，开发者想要干净可迁移的替代。",
+        "risk": "Bruno/Yaak/Hurl 已占位且免费开源，正面竞争空间极小。",
+        "scores": {
+          "demand": 3,
+          "competition": 1,
+          "feasibility": 4,
+          "monetization": 2,
+          "solo": 4
+        },
         "score": 14,
-        "verdict": "找差异化再说"
+        "evidence": [
+          {
+            "platform": "Hacker News",
+            "url": "https://news.ycombinator.com/item?id=50360947",
+            "note": "Postman 代理请求引发隐私质疑，1084 分大讨论"
+          }
+        ],
+        "status": "scored"
       },
       {
-        "code": "D",
+        "id": "D",
         "name": "跨模型个人上下文",
-        "score": 14,
-        "verdict": "平台风险高"
+        "verdict": "平台风险高",
+        "product": "不依赖单一模型或软件，沉淀可随使用成长的个人上下文与编码规范。",
+        "why": "AI 时代个人记忆如何跨模型迁移是真实焦虑。",
+        "risk": "模型厂商会亲自吞并该能力；没有通用解，标准未定。",
+        "scores": {
+          "demand": 3,
+          "competition": 2,
+          "feasibility": 2,
+          "monetization": 2,
+          "solo": 2
+        },
+        "score": 11,
+        "evidence": [
+          {
+            "platform": "V2EX",
+            "url": "https://www.v2ex.com/t/1255343",
+            "note": "如何不依赖单一模型沉淀个人上下文"
+          }
+        ],
+        "status": "scored"
       }
     ],
     "html": "<!doctype html>\n<html lang=\"zh-CN\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>数字产品商机报告 · 2026-11-08</title>\n<style>\n  :root {\n    --paper: #f6f1e7;\n    --ink: #1d1b17;\n    --muted: #6d665a;\n    --line: #d8cfbd;\n    --accent: #b4441f;\n    --good: #2f6b4f;\n    --card: #fffdf8;\n  }\n  * { box-sizing: border-box; }\n  body {\n    margin: 0;\n    background: var(--paper);\n    color: var(--ink);\n    font: 16px/1.7 \"PingFang SC\", \"Noto Sans SC\", system-ui, sans-serif;\n  }\n  .wrap { max-width: 980px; margin: 0 auto; padding: 56px 24px 96px; }\n  header { border-bottom: 2px solid var(--ink); padding-bottom: 28px; margin-bottom: 40px; }\n  .kicker { font-size: 13px; letter-spacing: .12em; color: var(--accent); text-transform: uppercase; }\n  h1 { font-family: \"Songti SC\", \"Noto Serif SC\", serif; font-size: 44px; line-height: 1.2; margin: 10px 0 14px; }\n  .lede { font-size: 18px; color: var(--muted); max-width: 720px; margin: 0; }\n  h2 { font-family: \"Songti SC\", \"Noto Serif SC\", serif; font-size: 28px; margin: 56px 0 16px; }\n  h3 { font-size: 19px; margin: 0 0 8px; }\n  section p, section li { color: #2c2922; }\n  .notice {\n    background: #fbe9dc; border-left: 4px solid var(--accent);\n    padding: 16px 20px; margin: 24px 0; border-radius: 4px;\n  }\n  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }\n  .card { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 20px; }\n  .tag { display: inline-block; font-size: 12px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); margin-right: 6px; }\n  .quote { font-style: italic; color: var(--muted); border-left: 2px solid var(--line); padding-left: 12px; margin: 10px 0 0; }\n  table { width: 100%; border-collapse: collapse; background: var(--card); font-size: 14px; }\n  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }\n  th { font-weight: 600; background: #efe7d6; }\n  .bar { display: inline-flex; gap: 3px; vertical-align: middle; }\n  .bar i { width: 14px; height: 8px; background: var(--line); border-radius: 2px; display: inline-block; }\n  .bar i.on { background: var(--ink); }\n  .rank-1 { color: var(--good); font-weight: 700; }\n  .steps { counter-reset: s; list-style: none; padding: 0; }\n  .steps li { counter-increment: s; padding: 14px 0 14px 56px; position: relative; border-bottom: 1px dashed var(--line); }\n  .steps li::before {\n    content: counter(s); position: absolute; left: 0; top: 12px; width: 36px; height: 36px;\n    border-radius: 50%; background: var(--ink); color: var(--paper); text-align: center; line-height: 36px; font-weight: 700;\n  }\n  a { color: var(--accent); }\n  footer { margin-top: 64px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 18px; }\n  @media (max-width: 640px) { h1 { font-size: 34px; } .wrap { padding: 32px 16px 64px; } }\n</style>\n</head>\n<body>\n<div class=\"wrap\">\n\n<header>\n  <div class=\"kicker\">Opportunity Report · 2026-11-08</div>\n  <h1>数字产品商机报告</h1>\n  <p class=\"lede\">从开发者社区里找“可以用一个数字产品解决”的真实问题，逐个评估可行性，并给出验证顺序。</p>\n</header>\n\n<div class=\"notice\">\n  <strong>证据边界。</strong>本次只覆盖 V2EX、Hacker News、Indie Hackers 三个平台。Reddit、Product Hunt 访问受限，网页搜索接口返回异常，因此小红书、抖音、知乎、微信生态未覆盖。结论偏向开发者与独立开发者群体，讨论热度不等于付费意愿，需要二次验证。\n</div>\n\n<section>\n<h2>一、调研范围</h2>\n<table>\n  <tr><th>来源</th><th>结果</th><th>说明</th></tr>\n  <tr><td>V2EX 问与答 / 程序员 / 分享创造</td><td>已抓取，精读 4 个高讨论帖</td><td>中文开发者社区，信号较真实</td></tr>\n  <tr><td>Hacker News（Ask、Postman 讨论）</td><td>已抓取，精读 1 个讨论</td><td>英文开发者，付费意愿相对高</td></tr>\n  <tr><td>Indie Hackers（帖子、Ideas DB）</td><td>已抓取，精读 2 个帖子</td><td>独立开发者的获客与变现痛点</td></tr>\n  <tr><td>Reddit / Product Hunt</td><td>受限，未覆盖</td><td>—</td></tr>\n  <tr><td>小红书 / 知乎 / 微信生态</td><td>未覆盖</td><td>需补充调研</td></tr>\n</table>\n</section>\n\n<section>\n<h2>二、痛点信号</h2>\n<div class=\"grid\">\n  <div class=\"card\">\n    <span class=\"tag\">V2EX</span><span class=\"tag\">邮件送达</span>\n    <h3>注册邮件收不到</h3>\n    <p>用户自己能收到，换 Gmail SMTP 也不行，垃圾箱也没有。回复指向 SPF/DKIM 配置、子域名分离、专业发信服务。</p>\n    <p class=\"quote\">独立开发者不懂送达排错，出了问题无从下手。</p>\n  </div>\n  <div class=\"card\">\n    <span class=\"tag\">Hacker News</span><span class=\"tag\">API 工具</span>\n    <h3>Postman 请求经厂商服务器代理</h3>\n    <p>多人表示放弃 Postman。替代品已很多：Bruno、Yaak、Hurl、Insomnia、HTTPie。Bruno 也被指遥测无法彻底关闭。</p>\n    <p class=\"quote\">开发者想要不联网、无账号、无遥测的调试工具。</p>\n  </div>\n  <div class=\"card\">\n    <span class=\"tag\">V2EX</span><span class=\"tag\">信息流</span>\n    <h3>想要干净的刷微博体验</h3>\n    <p>VVebo 下架后，电脑端体验下降；浏览器版臃肿，信息噪音多。</p>\n    <p class=\"quote\">需求是“去噪”，不是“再做一个微博客户端”。</p>\n  </div>\n  <div class=\"card\">\n    <span class=\"tag\">Indie Hackers</span><span class=\"tag\">获客</span>\n    <h3>独立开发者找不到第一批付费用户</h3>\n    <p>187 条评论的共识：不要广播式推广，去社区里找正在描述问题的人，一对一沟通，先人工交付再谈产品。</p>\n    <p class=\"quote\">有产品，没有付费客户，是最普遍的状态。</p>\n  </div>\n  <div class=\"card\">\n    <span class=\"tag\">V2EX</span><span class=\"tag\">AI 工程</span>\n    <h3>跨模型的个人上下文与代码可维护性</h3>\n    <p>如何不依赖单一模型沉淀个人上下文；AI 生成代码如何约束。回复普遍认为“没有通用解”。</p>\n  </div>\n  <div class=\"card\">\n    <span class=\"tag\">V2EX</span><span class=\"tag\">商业判断</span>\n    <h3>“卖软件”是否仍然成立</h3>\n    <p>44 条回复分歧很大。共识：通用小工具易被 AI 替代；有专业数据、需要持续维护与稳定性保障的软件仍有空间。</p>\n  </div>\n</div>\n<p style=\"margin-top:20px\"><strong>供给饱和信号。</strong>V2EX 分享创造节点里，小红书原图下载、网页倍速、剪贴板管理、视频下载、网页翻译、相册清理等工具层出不穷，多数免费或低价。通用浏览器插件型机会竞争激烈。</p>\n</section>\n\n<section>\n<h2>三、商机评估</h2>\n<p>评分 1–5，5 为最好。竞争空间越空越高。</p>\n<table>\n  <tr><th>商机</th><th>需求证据</th><th>竞争空间</th><th>技术</th><th>变现</th><th>一人可做</th><th>结论</th></tr>\n  <tr class=\"rank-1\">\n    <td><strong>C. 社群需求雷达</strong><br><span style=\"font-weight:400;color:var(--muted)\">监控社区里正在抱怨某问题的人，给出人工确认后发出的回复草稿</span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i></span></td>\n    <td>优先验证</td>\n  </tr>\n  <tr>\n    <td><strong>A. 邮件送达诊断</strong><br><span style=\"color:var(--muted)\">输入域名，检查 SPF/DKIM/DMARC，给修复步骤并持续监控</span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i></span></td>\n    <td>轻量 MVP</td>\n  </tr>\n  <tr>\n    <td><strong>F. 服务 + 工具组合</strong><br><span style=\"color:var(--muted)\">先人工交付并收费验证，再产品化</span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i></span></td>\n    <td>作为验证手段</td>\n  </tr>\n  <tr>\n    <td><strong>E. 轻量转化漏斗</strong><br><span style=\"color:var(--muted)\">看访问 → 注册 → 付费各步流失</span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i></span></td>\n    <td>先访谈</td>\n  </tr>\n  <tr>\n    <td><strong>B. 隐私优先 API 客户端</strong><br><span style=\"color:var(--muted)\">零账号、零遥测、可从 Postman 导入</span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i></span></td>\n    <td>找差异化再说</td>\n  </tr>\n  <tr>\n    <td><strong>D. 跨模型个人上下文</strong><br><span style=\"color:var(--muted)\">可导出、同步、版本化的个人上下文与规范库</span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i><i></i></span></td>\n    <td><span class=\"bar\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i></span></td>\n    <td>平台风险高</td>\n  </tr>\n</table>\n</section>\n\n<section>\n<h2>四、重点商机说明</h2>\n\n<h3>C. 社群需求雷达（优先）</h3>\n<p><strong>产品形态。</strong>监控 V2EX、HN 等平台的关键词，按“购买意图”打分，推送给用户，并生成回复草稿。<strong>所有回复必须人工确认后再发出</strong>，不做自动发帖。</p>\n<p><strong>为什么优先。</strong>IH 帖子 187 条评论的核心共识正是“去社区里找正在描述问题的人”。目标用户与付费用户高度重合。中文社区（V2EX 等）的覆盖目前较弱。</p>\n<p><strong>主要风险。</strong>自动回复容易被社区视为垃圾信息；各平台的 API 与服务条款有限制，抓取需控制频率。</p>\n\n<h3>A. 邮件送达诊断</h3>\n<p><strong>产品形态。</strong>输入域名，自动检查 SPF、DKIM、DMARC，给出具体修复步骤，并持续监控送达率。</p>\n<p><strong>为什么可行。</strong>DNS 检查与 SPF/DKIM 校验有成熟的开源库，一人可做 MVP。发信服务商卖的是“发信”，没有把“诊断与排错”做成独立产品。</p>\n<p><strong>主要风险。</strong>市场较小；发信服务商可能自行加入诊断功能。</p>\n\n<h3>F. 服务 + 工具组合（验证路径）</h3>\n<p>先人工为 3–5 个潜在客户完成一件具体的事（例如代做一次邮件送达诊断），收费验证，再把重复步骤做成工具。IH 与 V2EX 多条回复都强调“先卖服务，再做产品”。</p>\n</section>\n\n<section>\n<h2>五、建议的验证顺序</h2>\n<ol class=\"steps\">\n  <li><strong>访谈 10 个开发者（1–2 周）。</strong>找在 V2EX / IH 讨论过“获客难”“邮件收不到”的人，问上一次遇到问题怎么解决、花了多少时间和钱。目标是确认频率与付费意愿，而不是问“你会不会用”。</li>\n  <li><strong>人工交付 3–5 次。</strong>为潜在客户免费或低价完成一次邮件诊断或需求梳理，观察对方是否转发给同事、是否愿意付费。</li>\n  <li><strong>落地页测试。</strong>用目标用户真实会说的话作标题，例如“注册邮件收不到？3 分钟找出原因”，测试点击与留资。</li>\n  <li><strong>补充调研。</strong>覆盖小红书、知乎、微信生态，以及 Reddit 的替代访问方式。在此之前，结论不适用于中文消费者市场。</li>\n</ol>\n</section>\n\n<section>\n<h2>六、风险提示</h2>\n<ul>\n  <li>样本偏向开发者社群，不能代表普通消费者或企业客户。</li>\n  <li>讨论热度不等于付费意愿。“求工具”的人不一定付钱。</li>\n  <li>大平台（模型厂商、邮件服务商、Postman 等）的功能迭代可能快速吞并小产品机会。</li>\n  <li>社交平台抓取需遵守服务条款与频率限制。</li>\n</ul>\n</section>\n\n<section>\n<h2>引用来源</h2>\n<ul>\n  <li><a href=\"https://www.v2ex.com/t/1255322\">V2EX：为啥最近一周以来，用户收不到注册邮件</a></li>\n  <li><a href=\"https://www.v2ex.com/t/1255327\">V2EX：卖软件这个事情在未来可能是伪命题了</a></li>\n  <li><a href=\"https://www.v2ex.com/t/1255238\">V2EX：DSH 里能让它生成一个类似 VVebo 的刷微博插件吗？</a></li>\n  <li><a href=\"https://www.v2ex.com/t/1255343\">V2EX：AI 使用疑惑，大家伙有没有最佳实践？</a></li>\n  <li><a href=\"https://news.ycombinator.com/item?id=50360947\">Hacker News：Tell HN: Don't use Postman</a></li>\n  <li><a href=\"https://www.indiehackers.com/post/how-did-you-find-your-first-paying-customers-were-struggling-with-this-aUTkZW6IzB5qkjrHqVlA\">Indie Hackers：How did you find your first paying customers</a></li>\n  <li><a href=\"https://www.indiehackers.com/post/28-downloads-in-two-weeks-0-sales-and-i-couldnt-see-where-people-dropped-off-vTUWsSLhBDm4EH2pZGOa\">Indie Hackers：28 downloads in two weeks, 0 sales</a></li>\n  <li><a href=\"https://www.indiehackers.com/ideas\">Indie Hackers Ideas DB</a></li>\n</ul>\n</section>\n\n<footer>生成于 2026-11-08（Asia/Shanghai）。数据来自公开页面抓取，仅供决策参考。</footer>\n</div>\n</body>\n</html>\n"
@@ -75,6 +188,18 @@ const ARCHIVE = [
     const PANEL_ID = 'opportunity-radar';
     const ALL_PLATFORMS = ['V2EX', 'Hacker News', 'Indie Hackers', 'Reddit', 'Product Hunt', '小红书', '知乎', '微信'];
     const LS_PREFIX = 'opportunity-radar:config:';
+    const LS_STATUS = 'opportunity-radar:status:';
+
+    // Closed-loop pipeline: 发现 → 打分 → 排期 → 跟进 → 已验证 / 放弃
+    const STATUSES = ['discovered', 'scored', 'scheduled', 'following', 'validated', 'dropped'];
+    const STATUS_META = {
+      discovered: { label: { zh: '发现', en: 'Discovered' }, weight: 1 },
+      scored: { label: { zh: '打分', en: 'Scored' }, weight: 2 },
+      scheduled: { label: { zh: '排期', en: 'Scheduled' }, weight: 3 },
+      following: { label: { zh: '跟进', en: 'Following' }, weight: 4 },
+      validated: { label: { zh: '已验证', en: 'Validated' }, weight: 5 },
+      dropped: { label: { zh: '放弃', en: 'Dropped' }, weight: 0 },
+    };
 
     function currentLang() {
       return (typeof navigator !== 'undefined' && /^zh/i.test(navigator.language || '')) ? 'zh' : 'en';
@@ -82,7 +207,30 @@ const ARCHIVE = [
 
     const I18N = {
       zh: {
-        entry: '商机雷达', hint: '多平台发现 → 评估 → 出报告',
+        entry: '商机雷达', hint: '发现 → 评估 → 跟进 → 回填',
+        tabOverview: '介绍', tabLedger: '商机库', tabIssues: '期数',
+        // overview
+        ovKicker: '商机雷达 · Opportunity Radar',
+        ovTitle: '把「找商机」变成一套可复跑、会积累的流程',
+        ovLede: '从公开社群发现真实痛点 → 五维评估可行性 → 归档报告，并把每一期的候选沉淀成一张能持续跟进、回填结果的商机看板。',
+        ovStart: '先从商机库看起',
+        ovStartDesc: '所有期的候选汇总在这里，按状态推进、跟进、回填结果。',
+        ovBrowse: '浏览往期报告',
+        ovBrowseDesc: '按期查看每次调研的完整报告与定制选项。',
+        ovWhat: '这个插件解决什么',
+        ovWhatBody: '做独立产品最痛的不是「做不出来」，而是「不知道做什么值得做」。这个插件把一次性的调研固化下来：有统一 SOP、有证据可回溯、有评分可比较，还有一条从「发现」到「已验证/放弃」的状态流水线，避免每次从头再来、也避免把冲动当成机会。',
+        ovSteps: '怎么用（四步）',
+        ovStep1: '跑一次调研', ovStep1Desc: '在对话框贴入「复制定制调研指令」，Agent 按 SOP 采集多平台痛点、逐条留 URL。',
+        ovStep2: '产出并归档', ovStep2Desc: '报告 Markdown + 单文件网页 + 结构化 meta.json，放进 reports/<日期-主题>/ 后运行构建脚本。',
+        ovStep3: '进商机库跟进', ovStep3Desc: '所有候选自动汇总成卡片墙，按状态流转：发现 → 打分 → 排期 → 跟进 → 已验证 / 放弃。',
+        ovStep4: '回填结果', ovStep4Desc: '验证后回填结论，同一商机跨期复用同一 id，就能横向比较它几个月后还成不成立。',
+        ovFeatures: '主要能力',
+        ovF1: '跨期商机台账', ovF1Desc: '不再是散落的报告快照，而是一张能筛选、排序、搜索的商机库。',
+        ovF2: '五维评分', ovF2Desc: '需求证据 / 竞争空间 / 技术可行性 / 变现潜力 / 一人可做性，自动求和排序。',
+        ovF3: '证据可回溯', ovF3Desc: '每条信号带原始 URL 和说明，结论随时能复查，不靠记忆。',
+        ovF4: '状态流水线', ovF4Desc: '从发现到验证/放弃的进度可视化，状态存本地、刷新不丢。',
+        ovCount: '当前已归档', ovCountIssues: '期调研', ovCountCands: '个候选商机',
+        ovNote: '结论基于开发者社群样本，讨论热度不等于付费意愿；插件只固化流程，不内置爬虫、不自动发帖，关键判断需你二次验证。',
         issues: '期数', noIssues: '还没有归档的调研。',
         report: '报告', config: '定制', copy: '复制定制调研指令', copied: '已复制，粘贴到对话框即可复跑',
         topic: '调研主题', platforms: '调研平台', keywords: '关键词', notes: '备注',
@@ -92,9 +240,48 @@ const ARCHIVE = [
         disclaimer: '结论基于开发者社群样本，讨论热度不等于付费意愿，需二次验证。',
         newIssue: '把新一期放进 reports/ 后运行 node build-archive.mjs 并刷新页面。',
         score: '综合分',
+        // ledger
+        ledgerHint: '所有期的候选商机汇总，按状态流转、跟进、回填结果。状态存本地。',
+        noLedger: '暂无候选商机。先在期数里添加一期调研。',
+        filterStatus: '状态', filterPlatform: '平台', sortBy: '排序',
+        sortScore: '按评分', sortStatus: '按进度', sortDate: '按日期',
+        all: '全部', search: '搜索名称/理由/证据…', emptyFilter: '没有符合筛选条件的商机。',
+        from: '来自', okcount: '共', countUnit: '条',
+        detail: '详情', product: '产品形态', why: '为什么可行', risk: '主要风险',
+        evidence: '证据来源', noEvidence: '未记录证据链接。',
+        dims: '五维评分', statusLabel: '当前状态', openIssue: '定位到该期',
+        dimNames: {
+          demand: '需求证据', competition: '竞争空间', feasibility: '技术可行性',
+          monetization: '变现潜力', solo: '一人可做性',
+        },
+        setStatus: '更新状态', statusSaved: '状态已保存',
+        resetStatus: '重置为报告内状态', close: '关闭',
       },
       en: {
-        entry: 'Opportunity radar', hint: 'Discover → evaluate → report',
+        entry: 'Opportunity radar', hint: 'Discover → evaluate → follow → backfill',
+        tabOverview: 'About', tabLedger: 'Ledger', tabIssues: 'Issues',
+        // overview
+        ovKicker: 'Opportunity Radar',
+        ovTitle: 'Turn "finding opportunities" into a repeatable, compounding process',
+        ovLede: 'Discover real pain points in public communities → score feasibility on five dimensions → archive reports, and distill every issue\'s candidates into one board you can keep following and backfill results into.',
+        ovStart: 'Start with the ledger',
+        ovStartDesc: 'All candidates across issues, move them through the pipeline, follow up, backfill results.',
+        ovBrowse: 'Browse past reports',
+        ovBrowseDesc: 'View the full report and options for each research round.',
+        ovWhat: 'What this plugin solves',
+        ovWhatBody: 'The hardest part of building an indie product is not "can I build it" but "do I know what is worth building". This plugin locks a one-off research effort into a system: a shared SOP, traceable evidence, comparable scores, and a pipeline from "discovered" to "validated / dropped" — so you never start from scratch, and never mistake an impulse for an opportunity.',
+        ovSteps: 'How to use (four steps)',
+        ovStep1: 'Run a research round', ovStep1Desc: 'Paste the "Copy configured brief" into the composer; the agent collects pain points across platforms per the SOP and keeps a URL for each.',
+        ovStep2: 'Produce and archive', ovStep2Desc: 'Report markdown + single-file page + structured meta.json into reports/<date-topic>/, then run the build script.',
+        ovStep3: 'Follow in the ledger', ovStep3Desc: 'Every candidate is aggregated into a card wall; move it through discovered → scored → scheduled → following → validated / dropped.',
+        ovStep4: 'Backfill results', ovStep4Desc: 'Record conclusions after validation; reuse the same id across issues to compare a direction months later.',
+        ovFeatures: 'Key capabilities',
+        ovF1: 'Cross-issue ledger', ovF1Desc: 'No longer scattered snapshots — a searchable, sortable, filterable opportunity library.',
+        ovF2: 'Five-dimension scoring', ovF2Desc: 'Demand / Competition / Feasibility / Monetization / Solo-buildable, auto-summed and ranked.',
+        ovF3: 'Traceable evidence', ovF3Desc: 'Every signal carries its original URL and note, so conclusions stay revisitable.',
+        ovF4: 'Status pipeline', ovF4Desc: 'Progress from discovered to validated/dropped, saved locally and surviving reloads.',
+        ovCount: 'Archived so far', ovCountIssues: 'round(s)', ovCountCands: 'candidates',
+        ovNote: 'Findings come from developer communities; discussion volume is not willingness to pay. The plugin fixes the process only — no built-in crawler, no auto-posting; key judgments need your own verification.',
         issues: 'Issues', noIssues: 'No archived research yet.',
         report: 'Report', config: 'Options', copy: 'Copy configured brief', copied: 'Copied. Paste into the composer to re-run.',
         topic: 'Topic', platforms: 'Platforms', keywords: 'Keywords', notes: 'Notes',
@@ -104,6 +291,21 @@ const ARCHIVE = [
         disclaimer: 'Findings come from developer communities. Discussion volume is not willingness to pay.',
         newIssue: 'Drop a new folder into reports/, run node build-archive.mjs, then refresh.',
         score: 'Score',
+        ledgerHint: 'All candidates across issues. Move them through the pipeline, follow up, backfill results. Status saves locally.',
+        noLedger: 'No candidates yet. Add a research issue first.',
+        filterStatus: 'Status', filterPlatform: 'Platform', sortBy: 'Sort',
+        sortScore: 'By score', sortStatus: 'By stage', sortDate: 'By date',
+        all: 'All', search: 'Search name/reason/evidence…', emptyFilter: 'No candidates match the filters.',
+        from: 'From', okcount: 'Total', countUnit: '',
+        detail: 'Detail', product: 'Product', why: 'Why viable', risk: 'Main risk',
+        evidence: 'Evidence', noEvidence: 'No evidence links recorded.',
+        dims: 'Five-dimension scores', statusLabel: 'Current stage', openIssue: 'Jump to issue',
+        dimNames: {
+          demand: 'Demand', competition: 'Competition', feasibility: 'Feasibility',
+          monetization: 'Monetization', solo: 'Solo-buildable',
+        },
+        setStatus: 'Update stage', statusSaved: 'Stage saved',
+        resetStatus: 'Reset to report value', close: 'Close',
       },
     };
 
@@ -120,7 +322,8 @@ const ARCHIVE = [
         '3. 筛选「一个数字产品可解」的问题：边界清晰、付费方明确、无重资产、不会被大平台吞并、需持续维护。',
         '4. 按五维（需求证据/竞争空间/技术可行性/变现潜力/一人可做性）1–5 分评估，写明产品形态、为什么可行、主要风险、明确结论。',
         '5. 产出报告 Markdown 和单文件网页，附引用来源；归档到 reports/<日期-主题>/（index.html、report.md、meta.json）。',
-        '6. 讨论热度不等于付费意愿，必须写明需二次验证的地方。',
+        '6. meta.json 的 candidates 用闭环 schema：id/name/verdict/product/why/risk/scores{五维}/evidence[{platform,url,note}]/status。',
+        '7. 讨论热度不等于付费意愿，必须写明需二次验证的地方。',
       ].join('\n');
     }
 
@@ -144,6 +347,45 @@ const ARCHIVE = [
         keywords: c.keywords || [],
         notes: c.notes || '',
       };
+    }
+
+    /* ---------- status persistence helpers (per issue::candidate) ---------- */
+    const statusKey = (issueId, candId) => `${LS_STATUS}${issueId}::${candId}`;
+    function loadStatus(issueId, cand, fallback) {
+      try {
+        const v = localStorage.getItem(statusKey(issueId, cand));
+        if (v && STATUSES.includes(v)) return v;
+      } catch { /* noop */ }
+      return fallback;
+    }
+    function saveStatus(issueId, candId, status) {
+      try { localStorage.setItem(statusKey(issueId, candId), status); return true; }
+      catch { return false; }
+    }
+    function clearStatus(issueId, candId) {
+      try { localStorage.removeItem(statusKey(issueId, candId)); } catch { /* noop */ }
+    }
+
+    /* ---------- flatten archive into one ledger of enriched candidates ---------- */
+    function buildLedger(archive, statusOverrides) {
+      const rows = [];
+      for (const issue of archive) {
+        for (const c of (issue.candidates || [])) {
+          const key = `${issue.id}::${c.id}`;
+          const base = STATUS_META[c.status] ? c.status : 'discovered';
+          const status = statusOverrides[key] || base;
+          rows.push({
+            key,
+            issueId: issue.id,
+            issueTitle: issue.title,
+            issueDate: issue.date,
+            issueTopic: issue.topic,
+            cand: c,
+            status,
+          });
+        }
+      }
+      return rows;
     }
 
     const CSS = `
@@ -178,6 +420,7 @@ const ARCHIVE = [
   line-height:1.4; cursor:pointer; font-family:inherit; text-decoration:none; }
 .opr-btn:hover { border-color: var(--dsw-alias-border-l2); }
 .opr-btn:active { transform: scale(.97); }
+.opr-btn[disabled] { opacity:.45; cursor:not-allowed; }
 .opr-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:12px; }
 .opr-frame { width:100%; height:min(70vh,760px); border:1px solid var(--dsw-alias-border-l1);
   border-radius:6px; background: var(--dsw-alias-bg-base); box-sizing:border-box; }
@@ -193,6 +436,94 @@ const ARCHIVE = [
 .opr-check:active { transform: scale(.96); }
 .opr-note { font-size:11px; line-height:1.6; color: var(--dsw-alias-label-secondary); margin:14px 0 0; }
 .opr-empty { font-size:12px; color: var(--dsw-alias-label-secondary); padding:24px 0; }
+/* tabs */
+.opr-tabs { display:flex; gap:6px; margin:0 0 18px; }
+.opr-tab { padding:6px 14px; font-family:inherit; font-size:13px; cursor:pointer; border-radius:6px;
+  border:1px solid transparent; background:transparent; color: var(--dsw-alias-label-secondary); }
+.opr-tab[aria-selected="true"] { background: var(--dsw-alias-bg-layer-2); color: var(--dsw-alias-label-primary);
+  border-color: var(--dsw-alias-border-l2); font-weight:600; }
+/* ledger toolbar */
+.opr-bar { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:0 0 14px; font-size:12px; }
+.opr-bar select, .opr-bar input[type="search"] { padding:5px 8px; font-family:inherit; font-size:12px;
+  color: var(--dsw-alias-label-primary); background: var(--dsw-alias-bg-layer-1);
+  border:1px solid var(--dsw-alias-border-l1); border-radius:6px; }
+.opr-bar input[type="search"] { flex:1; min-width:160px; }
+.opr-count { color: var(--dsw-alias-label-secondary); margin-left:auto; }
+/* ledger card */
+.opr-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
+.opr-card { border:1px solid var(--dsw-alias-border-l1); border-radius:8px; padding:14px;
+  background: var(--dsw-alias-bg-layer-1); display:flex; flex-direction:column; gap:8px; }
+.opr-card-head { display:flex; align-items:flex-start; gap:8px; }
+.opr-card-title { font-weight:650; font-size:13px; line-height:1.35; flex:1; }
+.opr-badge { font-size:11px; padding:2px 8px; border-radius:999px; white-space:nowrap;
+  border:1px solid var(--dsw-alias-border-l2); color: var(--dsw-alias-label-primary); }
+.opr-badge.b-discovered { background: var(--dsw-alias-bg-layer-2); }
+.opr-badge.b-scored { background: color-mix(in srgb, var(--dsw-alias-brand-primary) 12%, transparent); }
+.opr-badge.b-scheduled { background: color-mix(in srgb, #d68a00 16%, transparent); }
+.opr-badge.b-following { background: color-mix(in srgb, #2f6b4f 16%, transparent); }
+.opr-badge.b-validated { background: color-mix(in srgb, #2f6b4f 30%, transparent); }
+.opr-badge.b-dropped { opacity:.6; text-decoration:line-through; }
+.opr-card-meta { display:flex; gap:10px; align-items:center; font-size:11px; color: var(--dsw-alias-label-secondary); flex-wrap:wrap; }
+.opr-card-why { font-size:12px; line-height:1.55; color: var(--dsw-alias-label-primary);
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.opr-card-foot { display:flex; gap:6px; align-items:center; margin-top:auto; }
+.opr-mini { padding:3px 8px; font-size:11px; border-radius:5px; cursor:pointer; font-family:inherit;
+  border:1px solid var(--dsw-alias-border-l1); background:transparent; color: var(--dsw-alias-label-primary); }
+.opr-mini:hover { border-color: var(--dsw-alias-border-l2); }
+/* detail drawer */
+.opr-mask { position:absolute; inset:0; background: color-mix(in srgb, #000 32%, transparent); display:flex;
+  justify-content:flex-end; z-index:30; }
+.opr-drawer { width:min(460px,92%); height:100%; overflow-y:auto; box-sizing:border-box;
+  background: var(--dsw-alias-bg-base); border-left:1px solid var(--dsw-alias-border-l1); padding:20px 22px 64px; }
+.opr-drawer-h { display:flex; align-items:flex-start; gap:10px; margin-bottom:6px; }
+.opr-drawer-title { font-size:16px; font-weight:680; line-height:1.35; flex:1; }
+.opr-close { cursor:pointer; border:none; background:transparent; color: var(--dsw-alias-label-secondary);
+  font-size:18px; line-height:1; padding:2px 6px; border-radius:6px; }
+.opr-close:hover { background: var(--dsw-alias-bg-layer-1); }
+.opr-dims { display:grid; grid-template-columns:1fr 1fr; gap:6px 16px; margin-top:4px; }
+.opr-dim { display:flex; justify-content:space-between; font-size:12px; padding:4px 0;
+  border-bottom:1px dashed var(--dsw-alias-border-l1); }
+.opr-dim b { font-variant-numeric:tabular-nums; }
+.opr-ev { display:block; font-size:12px; line-height:1.5; padding:6px 0;
+  border-bottom:1px solid var(--dsw-alias-border-l1); }
+.opr-ev a { color: var(--dsw-alias-brand-primary); text-decoration:none; word-break:break-all; }
+.opr-ev a:hover { text-decoration:underline; }
+.opr-select { padding:6px 9px; font-family:inherit; font-size:12px; border-radius:6px;
+  color: var(--dsw-alias-label-primary); background: var(--dsw-alias-bg-layer-1);
+  border:1px solid var(--dsw-alias-border-l1); }
+.opr-pipe { display:flex; gap:4px; flex-wrap:wrap; margin-top:6px; }
+.opr-pipe button { font-size:11px; padding:3px 8px; border-radius:999px; cursor:pointer; font-family:inherit;
+  border:1px solid var(--dsw-alias-border-l1); background:transparent; color: var(--dsw-alias-label-secondary); }
+.opr-pipe button[aria-pressed="true"] { background: var(--dsw-alias-bg-layer-2); color: var(--dsw-alias-label-primary);
+  border-color: var(--dsw-alias-border-l2); font-weight:600; }
+.opr-btn-primary { background: var(--dsw-alias-brand-primary); color: #fff; border-color: transparent; font-weight:600; }
+.opr-btn-primary:hover { filter: brightness(1.06); }
+/* overview */
+.opr-ov { max-width: 820px; }
+.opr-ov-hero { padding: 6px 0 20px; border-bottom: 1px solid var(--dsw-alias-border-l1); margin-bottom: 6px; }
+.opr-ov-kicker { font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--dsw-alias-brand-primary); margin-bottom: 10px; }
+.opr-ov-title { font-size: 24px; font-weight: 700; line-height: 1.3; margin: 0 0 12px; }
+.opr-ov-lede { font-size: 14px; line-height: 1.7; color: var(--dsw-alias-label-secondary); margin: 0 0 18px; }
+.opr-ov-actions { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom: 16px; }
+.opr-ov-stat { font-size: 12px; color: var(--dsw-alias-label-secondary); }
+.opr-ov-stat b { color: var(--dsw-alias-label-primary); font-variant-numeric: tabular-nums; }
+.opr-ov-sec { font-size: 14px; font-weight: 680; margin: 26px 0 12px; }
+.opr-ov-body { font-size: 13px; line-height: 1.75; color: var(--dsw-alias-label-primary); margin: 0; }
+.opr-ov-steps { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.opr-ov-step { display:flex; gap: 12px; padding: 14px; border:1px solid var(--dsw-alias-border-l1);
+  border-radius: 8px; background: var(--dsw-alias-bg-layer-1); }
+.opr-ov-num { flex:none; width: 24px; height: 24px; border-radius: 50%; display:flex; align-items:center;
+  justify-content:center; font-size: 12px; font-weight: 700; color:#fff; background: var(--dsw-alias-brand-primary); }
+.opr-ov-step-h { font-size: 13px; font-weight: 650; margin-bottom: 3px; }
+.opr-ov-step-d { font-size: 12px; line-height: 1.6; color: var(--dsw-alias-label-secondary); }
+.opr-ov-feats { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.opr-ov-feat { padding: 14px; border:1px solid var(--dsw-alias-border-l1); border-radius: 8px; }
+.opr-ov-feat-h { font-size: 13px; font-weight: 650; margin-bottom: 4px; }
+.opr-ov-feat-h::before { content:"◆ "; color: var(--dsw-alias-brand-primary); font-size: 10px; }
+.opr-ov-feat-d { font-size: 12px; line-height: 1.6; color: var(--dsw-alias-label-secondary); }
+.opr-ov-note { font-size: 11px; line-height: 1.65; color: var(--dsw-alias-label-secondary);
+  margin: 26px 0 0; padding-top: 14px; border-top: 1px solid var(--dsw-alias-border-l1); }
 @media (max-width: 720px) {
   .opr-shell { grid-template-columns: 1fr; }
   .opr-side { border-right:none; border-bottom:1px solid var(--dsw-alias-border-l1); max-height:190px; }
@@ -208,6 +539,7 @@ const ARCHIVE = [
         h('div', null, v, meta ? h('div', { className: 'opr-meta' }, meta) : null));
     }
 
+    /* ---------------- Issue detail (original view, kept intact) ---------------- */
     function IssueDetail({ item, t }) {
       const [cfg, setCfg] = useState(() => loadConfig(item));
       const [copied, setCopied] = useState(false);
@@ -246,7 +578,7 @@ const ARCHIVE = [
       };
 
       const rows = (item.candidates || []).map((c) => Row(
-        c.code + ' · ' + c.name,
+        (c.id || '') + ' · ' + c.name,
         h('span', null, h('span', { className: 'opr-score' }, c.score + '/25'), ' · ' + c.verdict)));
 
       return h('div', null,
@@ -263,7 +595,7 @@ const ARCHIVE = [
               h('input', { type: 'checkbox', checked: cfg.platforms.includes(p), onChange: () => togglePlatform(p) }), p)))),
           h('div', { className: 'opr-field' }, h('label', { className: 'opr-k' }, t.keywords),
             h('input', { className: 'opr-input', type: 'text', value: cfg.keywords.join('、'),
-              placeholder: '用顿号或逗号分隔',
+              placeholder: '顿号或逗号分隔',
               onChange: (e) => patch({ keywords: e.target.value.split(/[、,，]/).map((s) => s.trim()).filter(Boolean) }) })),
           h('div', { className: 'opr-field' }, h('label', { className: 'opr-k' }, t.notes),
             h('input', { className: 'opr-input', type: 'text', value: cfg.notes,
@@ -288,26 +620,268 @@ const ARCHIVE = [
         h('p', { className: 'opr-note' }, t.disclaimer));
     }
 
+    /* ---------------- Candidate detail drawer ---------------- */
+    function CandidateDrawer({ row, t, onClose, onStatus, onOpenIssue }) {
+      const c = row.cand;
+      const lang = currentLang();
+      const dims = c.scores || null;
+      return h('div', { className: 'opr-mask', onClick: onClose },
+        h('div', { className: 'opr-drawer', onClick: (e) => e.stopPropagation() },
+          h('div', { className: 'opr-drawer-h' },
+            h('div', { className: 'opr-drawer-title' }, c.id + ' · ' + c.name),
+            h('button', { className: 'opr-close', onClick: onClose, 'aria-label': t.close }, '×')),
+          h('div', { className: 'opr-card-meta' },
+            h('span', { className: 'opr-badge b-' + row.status }, STATUS_META[row.status].label[lang]),
+            h('span', null, h('span', { className: 'opr-score' }, c.score + '/25')),
+            c.verdict ? h('span', null, '· ' + c.verdict) : null),
+          h('p', { className: 'opr-meta', style: { marginTop: '6px' } },
+            t.from + '：' + row.issueTitle + ' · ' + row.issueDate),
+
+          h('div', { className: 'opr-sec' }, t.statusLabel),
+          h('div', { className: 'opr-pipe' }, STATUSES.map((s) => h('button', {
+            key: s, type: 'button', 'aria-pressed': row.status === s ? 'true' : 'false',
+            onClick: () => onStatus(s),
+          }, STATUS_META[s].label[lang]))),
+          h('div', { className: 'opr-actions' },
+            h('button', { className: 'opr-btn', onClick: () => onStatus(null) }, t.resetStatus),
+            h('button', { className: 'opr-btn', onClick: onOpenIssue }, t.openIssue)),
+
+          c.product ? h('div', null, h('div', { className: 'opr-sec' }, t.product),
+            h('p', { style: { fontSize: '12px', lineHeight: '1.6', margin: 0 } }, c.product)) : null,
+          c.why ? h('div', null, h('div', { className: 'opr-sec' }, t.why),
+            h('p', { style: { fontSize: '12px', lineHeight: '1.6', margin: 0 } }, c.why)) : null,
+          c.risk ? h('div', null, h('div', { className: 'opr-sec' }, t.risk),
+            h('p', { style: { fontSize: '12px', lineHeight: '1.6', margin: '0', color: 'var(--dsw-alias-label-secondary)' } }, c.risk)) : null,
+
+          dims ? h('div', null, h('div', { className: 'opr-sec' }, t.dims),
+            h('div', { className: 'opr-dims' }, Object.keys(dims).map((k) =>
+              h('div', { className: 'opr-dim', key: k },
+                h('span', null, t.dimNames[k] || k),
+                h('b', null, (dims[k] || 0) + '/5'))))) : null,
+
+          h('div', { className: 'opr-sec' }, t.evidence),
+          (c.evidence && c.evidence.length)
+            ? c.evidence.map((e, i) => h('div', { className: 'opr-ev', key: i },
+                h('div', { className: 'opr-meta' }, e.platform || ''),
+                h('a', { href: e.url, target: '_blank', rel: 'noopener noreferrer' }, e.url),
+                e.note ? h('div', { className: 'opr-meta' }, e.note) : null))
+            : h('p', { className: 'opr-note' }, t.noEvidence)));
+    }
+
+    /* ---------------- Ledger view ---------------- */
+    function Ledger({ archive, t, onOpenIssue }) {
+      const lang = currentLang();
+      const [overrides, setOverrides] = useState({});
+      const [sel, setSel] = useState(null);
+      const [fStatus, setFStatus] = useState('all');
+      const [fPlatform, setFPlatform] = useState('all');
+      const [sortBy, setSortBy] = useState('score');
+      const [q, setQ] = useState('');
+
+      // hydrate status overrides from localStorage once
+      useEffect(() => {
+        const next = {};
+        for (const issue of archive) {
+          for (const c of (issue.candidates || [])) {
+            const key = `${issue.id}::${c.id}`;
+            try {
+              const v = localStorage.getItem(statusKey(issue.id, c.id));
+              if (v && STATUSES.includes(v)) next[key] = v;
+            } catch { /* noop */ }
+          }
+        }
+        setOverrides(next);
+      }, [archive]);
+
+      const rows = useMemo(() => buildLedger(archive, overrides), [archive, overrides]);
+
+      const platformsOf = (row) => {
+        const issue = archive.find((x) => x.id === row.issueId);
+        return (issue && issue.config && issue.config.platforms) || [];
+      };
+
+      const filtered = useMemo(() => {
+        let list = rows;
+        if (fStatus !== 'all') list = list.filter((r) => r.status === fStatus);
+        if (fPlatform !== 'all') list = list.filter((r) => platformsOf(r).includes(fPlatform));
+        if (q.trim()) {
+          const s = q.trim().toLowerCase();
+          list = list.filter((r) => {
+            const c = r.cand;
+            const hay = [c.name, c.why, c.risk, c.product, (c.evidence || []).map((e) => e.note + ' ' + e.url).join(' ')]
+              .join(' ').toLowerCase();
+            return hay.includes(s);
+          });
+        }
+        const sorted = list.slice();
+        if (sortBy === 'score') sorted.sort((a, b) => b.cand.score - a.cand.score);
+        else if (sortBy === 'status') sorted.sort((a, b) => STATUS_META[b.status].weight - STATUS_META[a.status].weight);
+        else sorted.sort((a, b) => String(b.issueDate).localeCompare(String(a.issueDate)));
+        return sorted;
+      }, [rows, fStatus, fPlatform, sortBy, q, archive]);
+
+      const setStatus = (row, status) => {
+        if (status === null) {
+          clearStatus(row.issueId, row.cand.id);
+          setOverrides((prev) => { const n = { ...prev }; delete n[row.key]; return n; });
+        } else {
+          saveStatus(row.issueId, row.cand.id, status);
+          setOverrides((prev) => ({ ...prev, [row.key]: status }));
+        }
+      };
+
+      const selRow = sel ? rows.find((r) => r.key === sel) : null;
+
+      const statusCounts = useMemo(() => {
+        const m = {};
+        for (const s of STATUSES) m[s] = 0;
+        for (const r of rows) m[r.status] = (m[r.status] || 0) + 1;
+        return m;
+      }, [rows]);
+
+      return h('div', { style: { position: 'relative' } },
+        h('h1', { className: 'opr-h1' }, t.tabLedger),
+        h('p', { className: 'opr-sub' }, t.ledgerHint),
+
+        h('div', { className: 'opr-bar' },
+          h('label', null, t.filterStatus + ' ',
+            h('select', { value: fStatus, onChange: (e) => setFStatus(e.target.value) },
+              h('option', { value: 'all' }, t.all),
+              STATUSES.map((s) => h('option', { key: s, value: s },
+                STATUS_META[s].label[lang] + ' (' + (statusCounts[s] || 0) + ')')))),
+          h('label', null, t.filterPlatform + ' ',
+            h('select', { value: fPlatform, onChange: (e) => setFPlatform(e.target.value) },
+              h('option', { value: 'all' }, t.all),
+              ALL_PLATFORMS.map((p) => h('option', { key: p, value: p }, p)))),
+          h('label', null, t.sortBy + ' ',
+            h('select', { value: sortBy, onChange: (e) => setSortBy(e.target.value) },
+              h('option', { value: 'score' }, t.sortScore),
+              h('option', { value: 'status' }, t.sortStatus),
+              h('option', { value: 'date' }, t.sortDate))),
+          h('input', { type: 'search', value: q, placeholder: t.search,
+            onChange: (e) => setQ(e.target.value) }),
+          h('span', { className: 'opr-count' }, t.okcount + ' ' + filtered.length + ' ' + t.countUnit)),
+
+        rows.length === 0
+          ? h('p', { className: 'opr-empty' }, t.noLedger)
+          : (filtered.length === 0
+            ? h('p', { className: 'opr-empty' }, t.emptyFilter)
+            : h('div', { className: 'opr-cards' }, filtered.map((row) => {
+                const c = row.cand;
+                return h('div', { className: 'opr-card', key: row.key },
+                  h('div', { className: 'opr-card-head' },
+                    h('div', { className: 'opr-card-title' }, (c.id ? c.id + ' · ' : '') + c.name),
+                    h('span', { className: 'opr-badge b-' + row.status }, STATUS_META[row.status].label[lang])),
+                  h('div', { className: 'opr-card-meta' },
+                    h('span', { className: 'opr-score' }, c.score + '/25'),
+                    c.verdict ? h('span', null, '· ' + c.verdict) : null,
+                    h('span', null, '· ' + row.issueDate)),
+                  c.why ? h('div', { className: 'opr-card-why' }, c.why) : null,
+                  h('div', { className: 'opr-card-foot' },
+                    h('button', { className: 'opr-mini', onClick: () => setSel(row.key) }, t.detail),
+                    h('select', {
+                      className: 'opr-mini', value: row.status, style: { marginLeft: 'auto' },
+                      onChange: (e) => setStatus(row, e.target.value),
+                    }, STATUSES.map((s) => h('option', { key: s, value: s }, STATUS_META[s].label[lang])))));
+              }))),
+
+        selRow ? h(CandidateDrawer, {
+          row: selRow, t,
+          onClose: () => setSel(null),
+          onStatus: (s) => setStatus(selRow, s),
+          onOpenIssue: () => { setSel(null); onOpenIssue(selRow.issueId); },
+        }) : null);
+    }
+
+    /* ---------------- overview / intro home ---------------- */
+    function Overview({ archive, t, onGo }) {
+      const issueCount = archive.length;
+      let candCount = 0;
+      for (const it of archive) candCount += (it.candidates || []).length;
+
+      const steps = [
+        { n: '1', h: t.ovStep1, d: t.ovStep1Desc },
+        { n: '2', h: t.ovStep2, d: t.ovStep2Desc },
+        { n: '3', h: t.ovStep3, d: t.ovStep3Desc },
+        { n: '4', h: t.ovStep4, d: t.ovStep4Desc },
+      ];
+      const feats = [
+        { h: t.ovF1, d: t.ovF1Desc },
+        { h: t.ovF2, d: t.ovF2Desc },
+        { h: t.ovF3, d: t.ovF3Desc },
+        { h: t.ovF4, d: t.ovF4Desc },
+      ];
+
+      return h('div', { className: 'opr-ov' },
+        h('div', { className: 'opr-ov-hero' },
+          h('div', { className: 'opr-ov-kicker' }, t.ovKicker),
+          h('h1', { className: 'opr-ov-title' }, t.ovTitle),
+          h('p', { className: 'opr-ov-lede' }, t.ovLede),
+          h('div', { className: 'opr-ov-actions' },
+            h('button', { className: 'opr-btn opr-btn-primary', onClick: () => onGo('ledger') }, t.ovStart + ' →'),
+            h('button', { className: 'opr-btn', onClick: () => onGo('issues') }, t.ovBrowse)),
+          h('div', { className: 'opr-ov-stat' },
+            h('span', null, t.ovCount + '：'),
+            h('b', null, issueCount), ' ' + t.ovCountIssues + ' · ',
+            h('b', null, candCount), ' ' + t.ovCountCands)),
+
+        h('div', { className: 'opr-ov-sec' }, t.ovWhat),
+        h('p', { className: 'opr-ov-body' }, t.ovWhatBody),
+
+        h('div', { className: 'opr-ov-sec' }, t.ovSteps),
+        h('div', { className: 'opr-ov-steps' }, steps.map((s) =>
+          h('div', { className: 'opr-ov-step', key: s.n },
+            h('div', { className: 'opr-ov-num' }, s.n),
+            h('div', { className: 'opr-ov-step-body' },
+              h('div', { className: 'opr-ov-step-h' }, s.h),
+              h('div', { className: 'opr-ov-step-d' }, s.d))))),
+
+        h('div', { className: 'opr-ov-sec' }, t.ovFeatures),
+        h('div', { className: 'opr-ov-feats' }, feats.map((f, i) =>
+          h('div', { className: 'opr-ov-feat', key: i },
+            h('div', { className: 'opr-ov-feat-h' }, f.h),
+            h('div', { className: 'opr-ov-feat-d' }, f.d)))),
+
+        h('p', { className: 'opr-ov-note' }, t.ovNote));
+    }
+
+    /* ---------------- root page ---------------- */
     function Page() {
       const t = I18N[currentLang()];
       const items = useMemo(() => ARCHIVE, []);
+      const [tab, setTab] = useState('overview');
       const [selected, setSelected] = useState(() => (items[0] ? items[0].id : null));
       const item = items.find((x) => x.id === selected) || items[0];
+
+      const openIssue = (id) => { setSelected(id); setTab('issues'); };
 
       return h('div', { className: 'opr-shell' },
         h(Styles, null),
         h('aside', { className: 'opr-side' },
-          h('div', { className: 'opr-side-h' }, t.issues + ' · ' + items.length),
-          items.length ? items.map((it) => h('button', {
-            key: it.id, className: 'opr-issue', type: 'button',
-            'aria-current': it.id === (item && item.id) ? 'true' : 'false',
-            onClick: () => setSelected(it.id),
-          },
-            h('div', { className: 'opr-issue-date' }, it.date),
-            h('div', { className: 'opr-issue-title' }, it.title))) : h('p', { className: 'opr-empty' }, t.noIssues),
-          h('p', { className: 'opr-side-note' }, t.newIssue)),
+          h('div', { className: 'opr-tabs' },
+            h('button', { className: 'opr-tab', 'aria-selected': tab === 'overview' ? 'true' : 'false',
+              onClick: () => setTab('overview') }, t.tabOverview),
+            h('button', { className: 'opr-tab', 'aria-selected': tab === 'ledger' ? 'true' : 'false',
+              onClick: () => setTab('ledger') }, t.tabLedger),
+            h('button', { className: 'opr-tab', 'aria-selected': tab === 'issues' ? 'true' : 'false',
+              onClick: () => setTab('issues') }, t.tabIssues)),
+          tab === 'issues' ? h('div', null,
+            h('div', { className: 'opr-side-h' }, t.issues + ' · ' + items.length),
+            items.length ? items.map((it) => h('button', {
+              key: it.id, className: 'opr-issue', type: 'button',
+              'aria-current': it.id === (item && item.id) ? 'true' : 'false',
+              onClick: () => setSelected(it.id),
+            },
+              h('div', { className: 'opr-issue-date' }, it.date),
+              h('div', { className: 'opr-issue-title' }, it.title))) : h('p', { className: 'opr-empty' }, t.noIssues),
+            h('p', { className: 'opr-side-note' }, t.newIssue))
+            : h('p', { className: 'opr-side-note' }, t.ledgerHint)),
         h('div', { className: 'opr-main' },
-          item ? h(IssueDetail, { key: item.id, item, t }) : h('p', { className: 'opr-empty' }, t.noIssues)));
+          tab === 'overview'
+            ? h(Overview, { archive: items, t, onGo: setTab })
+            : tab === 'ledger'
+            ? h(Ledger, { archive: items, t, onOpenIssue: openIssue })
+            : (item ? h(IssueDetail, { key: item.id, item, t }) : h('p', { className: 'opr-empty' }, t.noIssues))));
     }
 
     /** Sidebar glyph: a plain radar mark that takes the active colour from the sidebar. */

@@ -22,6 +22,43 @@ function readJson(path) {
   catch (error) { throw new Error(`${path}: ${error.message}`); }
 }
 
+const SCORE_KEYS = ['demand', 'competition', 'feasibility', 'monetization', 'solo'];
+
+// Normalize one candidate from either the legacy flat shape
+// ({ code, name, score, verdict }) or the closed-loop shape
+// ({ id, name, verdict, scores, evidence, status, product, why, risk }).
+function normalizeCandidate(raw, index) {
+  const scores = raw.scores && typeof raw.scores === 'object' ? raw.scores : null;
+  const score = typeof raw.score === 'number'
+    ? raw.score
+    : scores
+      ? SCORE_KEYS.reduce((sum, k) => sum + (Number(scores[k]) || 0), 0)
+      : 0;
+  const evidence = Array.isArray(raw.evidence)
+    ? raw.evidence
+        .filter((e) => e && e.url)
+        .map((e) => ({
+          platform: e.platform || '',
+          url: e.url,
+          note: e.note || '',
+        }))
+    : [];
+  return {
+    id: raw.id || raw.code || `#${index + 1}`,
+    name: raw.name || raw.id || `Candidate ${index + 1}`,
+    verdict: raw.verdict || '',
+    product: raw.product || '',
+    why: raw.why || '',
+    risk: raw.risk || '',
+    scores: scores
+      ? SCORE_KEYS.reduce((acc, k) => { acc[k] = Number(scores[k]) || 0; return acc; }, {})
+      : null,
+    score,
+    evidence,
+    status: raw.status || 'discovered',
+  };
+}
+
 const items = readdirSync(REPORTS)
   .filter((id) => /^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(id) && statSync(join(REPORTS, id)).isDirectory())
   .map((id) => {
@@ -37,7 +74,7 @@ const items = readdirSync(REPORTS)
       summary: meta.summary || '',
       coverage: meta.coverage || '',
       config: meta.config || { topic: meta.topic || '', platforms: [], keywords: [], notes: '' },
-      candidates: meta.candidates || [],
+      candidates: (meta.candidates || []).map(normalizeCandidate),
       html,
     };
   })

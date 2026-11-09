@@ -4,10 +4,23 @@
 
 ## 界面
 
-点左侧栏的雷达图标打开主面板，布局是**左侧期数列表 + 右侧该期详情**：
+点左侧栏的雷达图标打开主面板。顶部有两个标签：
 
-- 左侧列出所有归档期数（按日期倒序），点选即切换；默认选中最新一期。
+### 商机库（默认）
+
+把**所有期数**的候选商机汇总成一块看板，是这套插件的闭环核心：
+
+- **看板卡片**：每张卡显示候选商机、五维综合分、结论、来源期数、当前状态。
+- **状态流转**：发现 → 打分 → 排期 → 跟进 → 已验证 / 放弃，点卡片或卡片内的下拉即可改，**状态存浏览器 localStorage**，刷新后仍在。
+- **筛选与排序**：按状态、按平台（取自各期 `config.platforms`）、按评分/进度/日期排序，以及按名称/理由/证据全文搜索。
+- **详情抽屉**：点「详情」打开右侧抽屉，看产品形态、为什么可行、主要风险、五维评分、**每一条证据的原始 URL**，可一键「定位到该期」。
+- 同一商机在不同期数里复用同一 `id`，就能横向对比它历期分数的变化。
+
+### 期数
+
+- 左侧列出所有归档期数（按日期倒序），点选即切换。
 - 右侧显示该期的**定制选项**、候选商机、报告网页，以及免责说明。
+- 「详情」抽屉里的「定位到该期」会自动切回这个标签并选中对应期。
 
 ### 每期的定制选项
 
@@ -23,12 +36,12 @@
 
 | 文件 | 作用 |
 |---|---|
-| `WORKFLOW.md` | **流程单一真源**。完整 SOP，可单独交给任意 Agent 复跑 |
-| `index.js` | Host 半：注册 `/radar` 与 `/opportunity` 命令 |
-| `client.js` | Client 半：侧边栏图标 + 主面板（期数列表、详情、定制）。含编译进去的往期数据 |
-| `build-archive.mjs` | 把 `reports/` 编译进 `client.js` 的数据块 |
-| `reports/<期>/` | 每期一个目录：`meta.json`、`index.html`、`report.md` |
-| `locale/*`, `icon.svg` | 插件在插件管理器里的显示元数据 |
+| `WORKFLOW.md` | **流程单一真源**。完整 SOP，可单独交给任意 Agent 复跑。 |
+| `index.js` | Host 半：注册 `/radar` 与 `/opportunity` 命令。 |
+| `client.js` | Client 半：侧边栏图标 + 主面板（商机库看板 + 期数详情 + 定制）。含编译进去的往期数据。 |
+| `build-archive.mjs` | 把 `reports/` 编译进 `client.js`，并把候选商机归一化成闭环结构（兼容旧 `score` 字段）。 |
+| `reports/<期>/` | 每期一个目录：`meta.json`（结构化商机）、`index.html`、`report.md`。 |
+| `locale/*`, `icon.svg` | 插件在插件管理器里的显示元数据。 |
 
 ## 命令
 
@@ -71,4 +84,8 @@
 
 ## 安装
 
-通过 Harness 的 `plugin_manager install_bundle`，`target` 指向本目录绝对路径。安装后在插件管理器可见「商机雷达」。Client 半属于浏览器资源，本环境是打包安装的 Desktop、没有 `dev:web` watcher，改动不会自动热更新，**需要刷新页面**。
+通过 Harness 的 `plugin_manager install_bundle`，`target` 指向本目录绝对路径。安装后在插件管理器可见「商机雷达」。
+
+> **更新已安装插件后必须重启 Harness 应用 + 刷新页面**。Host 半的插件行只在启动时合成；在已运行的进程里改文件（即使是 `link:` 软链安装）不会把行挂上，侧边栏也没有图标。改完 `client.js` 后：重启应用 → 再刷新 Web 页面。Client 半没有 `dev:web` watcher，不会热更新。
+>
+> **client 入口的 `id` 必须与 npm 包名完全一致**（本插件为 `@xinnix/dsh-opportunity-radar`）。若写成别的值（例如遗留的 `@local/...`），`dsh-client-modules` 会在同一次启动里把它当作两个不同模块注册，抛 `duplicate factory registration ... (bundle executed twice without invalidate?)`，导致渲染进程启动即崩、应用反复重试后把整个 bundle 自动禁用。改过 `id` 之后：先 `plugin_manager set_bundle enabled:true` 重新启用，再重启/刷新。

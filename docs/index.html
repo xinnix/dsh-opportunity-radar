@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>商机雷达 · Opportunity Radar — 把「找商机」变成可复跑、会积累的流程</title>
+<meta name="description" content="商机雷达是 DeepSeek Harness (DSH) 的插件：从公开社群发现真实痛点，五维评估可行性，归档报告，并把每期候选沉淀成可持续跟进、回填结果的商机库。">
+<meta property="og:title" content="商机雷达 · Opportunity Radar">
+<meta property="og:description" content="把「找商机」变成一套可复跑、会积累的流程。DSH 插件，开源。">
+<meta property="og:type" content="website">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --paper: #f6f1e7;
+    --paper-2: #efe7d6;
+    --ink: #1d1b17;
+    --muted: #6d665a;
+    --line: #d8cfbd;
+    --accent: #b4441f;
+    --accent-soft: #fbe9dc;
+    --good: #2f6b4f;
+    --card: #fffdf8;
+    --shadow: 0 1px 2px rgba(29,27,23,.04), 0 8px 24px rgba(29,27,23,.06);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 16px/1.7 "PingFang SC", "Noto Sans SC", -apple-system, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  code {
+    font-family: "SF Mono", ui-monospace, "JetBrains Mono", Menlo, monospace;
+    font-size: .88em; background: var(--paper-2); padding: 2px 6px; border-radius: 5px;
+    border: 1px solid var(--line);
+  }
+
+  /* nav */
+  nav {
+    position: sticky; top: 0; z-index: 20; backdrop-filter: saturate(140%) blur(8px);
+    background: color-mix(in srgb, var(--paper) 86%, transparent);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; gap: 14px; height: 60px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .01em; }
+  .brand img { width: 26px; height: 26px; }
+  nav .links { margin-left: auto; display: flex; gap: 22px; font-size: 14px; }
+  nav .links a { color: var(--muted); }
+  nav .links a:hover { color: var(--ink); text-decoration: none; }
+  nav .gh {
+    display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600;
+    padding: 7px 14px; border: 1px solid var(--ink); border-radius: 999px; color: var(--ink);
+  }
+  nav .gh:hover { background: var(--ink); color: var(--paper); text-decoration: none; }
+
+  /* hero */
+  header.hero { padding: 84px 0 64px; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
+  header.hero::after {
+    content: ""; position: absolute; right: -80px; top: -40px; width: 420px; height: 420px;
+    background: radial-gradient(circle at center, rgba(180,68,31,.10), transparent 68%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .kicker { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  h1 {
+    font-family: "Songti SC", "Noto Serif SC", "Source Han Serif", serif;
+    font-size: 52px; line-height: 1.16; letter-spacing: -.01em; margin: 16px 0 20px; max-width: 16ch;
+  }
+  h1 .accent { color: var(--accent); }
+  .lede { font-size: 19px; line-height: 1.75; color: var(--muted); max-width: 620px; margin: 0 0 32px; }
+  .cta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 10px;
+    font-weight: 600; font-size: 15px; border: 1px solid transparent; cursor: pointer;
+  }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 6px 18px rgba(180,68,31,.22); }
+  .btn-primary:hover { filter: brightness(1.06); text-decoration: none; }
+  .btn-ghost { background: transparent; border-color: var(--ink); color: var(--ink); }
+  .btn-ghost:hover { background: var(--ink); color: var(--paper); text-decoration: none; }
+  .hero-flow { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 30px; font-size: 13px; color: var(--muted); align-items: center; }
+  .hero-flow b { color: var(--ink); font-weight: 600; }
+  .hero-flow .sep { color: var(--line); }
+
+  /* section shell */
+  section { padding: 68px 0; }
+  section.alt { background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+  h2 {
+    font-family: "Songti SC", "Noto Serif SC", serif; font-size: 32px; line-height: 1.25;
+    margin: 0 0 14px; letter-spacing: -.005em;
+  }
+  .sub { font-size: 16px; color: var(--muted); max-width: 680px; margin: 0 0 36px; }
+
+  /* grid cards */
+  .grid { display: grid; gap: 16px; }
+  .g2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .g4 { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 22px;
+    box-shadow: var(--shadow);
+  }
+  .card h3 { font-size: 16px; margin: 0 0 8px; }
+  .card p { margin: 0; font-size: 14px; line-height: 1.7; color: var(--muted); }
+  .card .ico { font-size: 22px; margin-bottom: 10px; display: block; }
+
+  /* steps */
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+  .steps li {
+    counter-increment: s; position: relative; padding: 20px 22px 20px 66px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow);
+  }
+  .steps li::before {
+    content: counter(s); position: absolute; left: 20px; top: 20px; width: 32px; height: 32px;
+    border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700;
+    display: grid; place-items: center; font-size: 15px;
+  }
+  .steps h3 { font-size: 15px; margin: 0 0 5px; }
+  .steps p { margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); }
+
+  /* tabs mock */
+  .tabs-demo { display: grid; grid-template-columns: 200px 1fr; border: 1px solid var(--line); border-radius: 14px;
+    overflow: hidden; background: var(--card); box-shadow: var(--shadow); }
+  .td-side { border-right: 1px solid var(--line); padding: 16px 12px; background: var(--paper); }
+  .td-tabs { display: flex; gap: 5px; margin-bottom: 14px; flex-wrap: wrap; }
+  .td-tab { font-size: 12px; padding: 5px 10px; border-radius: 7px; color: var(--muted); border: 1px solid transparent; }
+  .td-tab.on { background: var(--paper-2); color: var(--ink); border-color: var(--line); font-weight: 600; }
+  .td-issue { font-size: 12px; padding: 9px 10px; border-radius: 7px; background: var(--paper-2); margin-bottom: 7px; }
+  .td-issue .d { color: var(--muted); font-size: 11px; }
+  .td-main { padding: 18px; display: grid; gap: 11px; align-content: start; }
+  .td-card { border: 1px solid var(--line); border-radius: 9px; padding: 12px 13px; }
+  .td-card .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .td-card .nm { font-weight: 650; font-size: 13px; }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap; }
+  .badge.b-scored { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+  .badge.b-following { background: rgba(47,107,79,.14); color: var(--good); border-color: transparent; }
+  .badge.b-discovered { background: var(--paper-2); color: var(--muted); }
+  .td-card .meta { font-size: 11px; color: var(--muted); margin-top: 5px; }
+  .td-card .scores { display: flex; gap: 3px; margin-top: 8px; }
+  .td-card .scores i { height: 6px; width: 16px; border-radius: 2px; background: var(--line); }
+  .td-card .scores i.on { background: var(--accent); }
+
+  /* score dims */
+  .dims { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .dim { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+  .dim b { display: block; font-size: 14px; margin-bottom: 4px; }
+  .dim span { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+  /* install */
+  .codeblock { background: #1d1b17; color: #f6f1e7; border-radius: 12px; padding: 18px 22px; overflow-x: auto;
+    box-shadow: var(--shadow); }
+  .codeblock code { background: none; border: none; color: inherit; font-size: 13.5px; line-height: 1.7; padding: 0;
+    white-space: pre; display: block; font-family: "SF Mono", ui-monospace, "JetBrains Mono", Menlo, monospace; }
+  .codeblock .c { color: #9c9284; }
+  .pill-note { display: inline-block; font-size: 12px; color: var(--muted); border: 1px dashed var(--line);
+    padding: 4px 12px; border-radius: 999px; }
+
+  /* footer */
+  footer { padding: 48px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; align-items: center; }
+  footer a { color: var(--muted); }
+
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+  .chip { font-size: 12px; padding: 4px 11px; border-radius: 999px; background: var(--card);
+    border: 1px solid var(--line); color: var(--muted); }
+  .chip b { color: var(--ink); }
+
+  @media (max-width: 760px) {
+    h1 { font-size: 38px; }
+    nav .links { display: none; }
+    .tabs-demo { grid-template-columns: 1fr; }
+    .td-side { border-right: none; border-bottom: 1px solid var(--line); }
+    section { padding: 52px 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="brand"><img src="icon.svg" alt="">商机雷达</span>
+    <div class="links">
+      <a href="#what">是什么</a>
+      <a href="#flow">闭环</a>
+      <a href="#ui">界面</a>
+      <a href="#install">安装</a>
+    </div>
+    <a class="gh" href="https://github.com/xinnix/dsh-opportunity-radar" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">DeepSeek Harness · DSH Plugin · 开源</div>
+    <h1>把「找商机」变成一套<span class="accent">可复跑、会积累</span>的流程</h1>
+    <p class="lede">从公开社群发现真实痛点 → 五维评估可行性 → 归档报告，并把每一期的候选沉淀成一张能持续跟进、回填结果的商机看板。不再每次从零开始，也不再把冲动当成机会。</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#install">安装插件 →</a>
+      <a class="btn btn-ghost" href="https://github.com/xinnix/dsh-opportunity-radar" target="_blank" rel="noopener">查看源码</a>
+    </div>
+    <div class="hero-flow">
+      <b>发现</b><span class="sep">→</span><b>评估</b><span class="sep">→</span><b>跟进</b><span class="sep">→</span><b>回填</b>
+      <span style="margin-left:8px;color:var(--line)">|</span>
+      <span>一个侧边栏面板，告别散落的报告快照</span>
+    </div>
+    <div class="badge-row">
+      <span class="chip"><b>MIT</b> 开源</span>
+      <span class="chip">DSH <b>0.2.2</b> 及以上</span>
+      <span class="chip"><b>双语</b> 中 / EN</span>
+      <span class="chip">纯本地 · 无爬虫 · 不发帖</span>
+    </div>
+  </div>
+</header>
+
+<section id="what">
+  <div class="wrap">
+    <div class="eyebrow">What &amp; Why</div>
+    <h2>它解决什么</h2>
+    <p class="sub">做独立产品最痛的不是「做不出来」，而是「不知道做什么值得做」。这个插件把一次性的调研固化成一套系统：有统一 SOP、有证据可回溯、有评分可比较，还有一条从「发现」到「已验证 / 放弃」的状态流水线。</p>
+    <div class="grid g3">
+      <div class="card">
+        <span class="ico">📡</span>
+        <h3>多平台发现</h3>
+        <p>V2EX、Hacker News、Indie Hackers 等社群，按高讨论帖 → 详情页 → 回复逐条采集，每条信号留原始 URL。</p>
+      </div>
+      <div class="card">
+        <span class="ico">🎯</span>
+        <h3>五维评估</h3>
+        <p>需求证据 / 竞争空间 / 技术可行性 / 变现潜力 / 一人可做性，1–5 分打分，综合分自动求和排序。</p>
+      </div>
+      <div class="card">
+        <span class="ico">📒</span>
+        <h3>跨期台账</h3>
+        <p>所有期的候选汇总成一张可筛选、排序、搜索的商机库。同一方向跨期复用同一 id，横向比较它几个月后还成不成立。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="flow" class="alt">
+  <div class="wrap">
+    <div class="eyebrow">The Closed Loop</div>
+    <h2>闭环：从发现到回填，四步走</h2>
+    <p class="sub">插件固化的是<strong>流程</strong>，不是抓取能力——实际采集由 Agent 用 web_search / web_fetch 完成，不内置爬虫、不自动发帖，关键判断始终由你拍板。</p>
+    <ol class="steps">
+      <li>
+        <h3>跑一次调研</h3>
+        <p>在对话框贴入面板复制的「定制调研指令」，Agent 按 SOP 采集多平台痛点、逐条留 URL、声明未覆盖平台。</p>
+      </li>
+      <li>
+        <h3>产出并归档</h3>
+        <p>生成报告 Markdown + 单文件网页 + 结构化 <code>meta.json</code>，放进 <code>reports/&lt;日期-主题&gt;/</code> 后运行构建脚本。</p>
+      </li>
+      <li>
+        <h3>进商机库跟进</h3>
+        <p>候选自动汇总成卡片墙，按状态流转：发现 → 打分 → 排期 → 跟进 → 已验证 / 放弃。状态存本地，刷新不丢。</p>
+      </li>
+      <li>
+        <h3>回填结果</h3>
+        <p>验证后回填结论。同一商机跨期复用同一 id，商机库就会把历期数据并排展示，形成会复利的判断资产。</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="ui">
+  <div class="wrap">
+    <div class="eyebrow">Inside the Panel</div>
+    <h2>侧边栏面板 · 三个标签</h2>
+    <p class="sub">一进来先看到「介绍」，说清这是什么、怎么用；再进「商机库」看板推进；「期数」保留每期完整报告与定制选项。</p>
+
+    <div class="tabs-demo" aria-hidden="true">
+      <div class="td-side">
+        <div class="td-tabs">
+          <span class="td-tab on">介绍</span>
+          <span class="td-tab">商机库</span>
+          <span class="td-tab">期数</span>
+        </div>
+        <div class="td-issue"><div class="d">2026-11-08</div>数字产品商机报告</div>
+      </div>
+      <div class="td-main">
+        <div class="td-card">
+          <div class="top"><span class="nm">C · 社群需求雷达</span><span class="badge b-following">跟进</span></div>
+          <div class="meta">20/25 · 优先验证 · 来自 2026-11-08</div>
+          <div class="scores"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+        </div>
+        <div class="td-card">
+          <div class="top"><span class="nm">A · 邮件送达诊断</span><span class="badge b-scored">打分</span></div>
+          <div class="meta">19/25 · 轻量 MVP · 来自 2026-11-08</div>
+          <div class="scores"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div>
+        </div>
+        <div class="td-card">
+          <div class="top"><span class="nm">F · 服务 + 工具组合</span><span class="badge b-discovered">发现</span></div>
+          <div class="meta">19/25 · 验证路径 · 来自 2026-11-08</div>
+          <div class="scores"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-top:22px">
+      <div class="card"><h3>商机库看板</h3><p>跨所有期聚合的卡片墙：按状态 / 平台 / 评分筛选排序，全文搜索理由与证据。</p></div>
+      <div class="card"><h3>详情抽屉</h3><p>点开任一商机，看产品形态、为什么可行、主要风险、五维评分，以及每条证据的原始 URL。</p></div>
+      <div class="card"><h3>期数报告</h3><p>按期查看完整报告网页、候选商机、以及可编辑的调研主题 / 平台 / 关键词。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow">Scoring</div>
+    <h2>五维评分，让「值不值得做」可比</h2>
+    <p class="sub">每个候选按 1–5 分打分，综合分满分 25。分数不是结论，是排序与讨论的起点——先访谈、先人工交付、再谈做不做。</p>
+    <div class="dims">
+      <div class="dim"><b>需求证据</b><span>有多少独立、具体的求助信号，回复是否给出具体解法。</span></div>
+      <div class="dim"><b>竞争空间</b><span>现有替代品有多弱或多空；是否无直接竞品。</span></div>
+      <div class="dim"><b>技术可行性</b><span>一人能否一两周做出可用 MVP。</span></div>
+      <div class="dim"><b>变现潜力</b><span>付费方是否明确，痛点是否直接挂钩省钱或赚钱。</span></div>
+      <div class="dim"><b>一人可做性</b><span>是否纯软件、无需线下履约、重资产或强牌照。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="install">
+  <div class="wrap">
+    <div class="eyebrow">Getting Started</div>
+    <h2>安装</h2>
+    <p class="sub">通过 DeepSeek Harness 的插件管理器一键安装，或用命令行直接把本仓库加入你的 profile。</p>
+    <div class="codeblock"><code><span class="c"># 方式一：CLI 从本仓库安装（link 本地目录）</span>
+dsh plugin --profile desktop add &lt;本仓库路径&gt;
+
+<span class="c"># 方式二：直接指向工作区目录安装</span>
+<span class="c"># 在插件管理器里 install_bundle → target 指向仓库绝对路径</span>
+
+<span class="c"># 安装/更新后：重启 DSH 应用 → 刷新 Web 页面</span>
+<span class="c"># 侧边栏出现雷达图标 → 点开即「介绍」首页</span></code></div>
+    <p style="margin-top:16px" class="pill-note">首次安装或更新 client 代码后必须重启应用 + 刷新页面：Host 插件行只在启动时合成。</p>
+
+    <div class="grid g2" style="margin-top:30px">
+      <div class="card">
+        <h3>依赖</h3>
+        <p>DeepSeek Harness 0.2.2 及以上。插件依赖 Harness 已配置的模型与账号，普通阅读不需要额外密钥。</p>
+      </div>
+      <div class="card">
+        <h3>数据在哪</h3>
+        <p>全部本地：<code>reports/</code> 归档、状态存浏览器 localStorage。无云服务、无遥测、不自动发帖。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>商机雷达 · Opportunity Radar — MIT 开源，社区插件，非 DeepSeek 官方维护。</span>
+    <span><a href="https://github.com/xinnix/dsh-opportunity-radar" target="_blank" rel="noopener">GitHub</a> · <a href="https://github.com/xinnix/dsh-opportunity-radar/blob/main/README.md" target="_blank" rel="noopener">README</a> · <a href="https://github.com/xinnix/dsh-opportunity-radar/blob/main/WORKFLOW.md" target="_blank" rel="noopener">WORKFLOW</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

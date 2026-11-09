@@ -103,4 +103,32 @@
 最终交付三件：
 - `商机报告-数字产品.md`：完整报告。
 - `opportunity-report/index.html`：可离线打开的网页。
+- `reports/<日期-主题>/meta.json`：结构化商机数据（供「商机库」跨期聚合与跟进）。
 - 本 SOP 的执行记录：哪些平台抓了、哪些失败、哪些结论需要二次验证。
+
+### meta.json 的 candidates 闭环 schema
+
+每个候选商机写成下面这样，`商机库` 会据此跨期聚合、按状态跟进、回填结果：
+
+```jsonc
+{
+  "id": "C",                         // 期内唯一编号
+  "name": "社群需求雷达",
+  "verdict": "优先验证",              // 第4节的明确结论
+  "product": "用一两句话描述产品形态",
+  "why": "为什么可行（对应付费方、护城河）",
+  "risk": "主要风险",
+  "scores": {                        // 五维 1–5，综合分由构建脚本自动求和
+    "demand": 5, "competition": 4, "feasibility": 4, "monetization": 3, "solo": 4
+  },
+  "evidence": [                       // 每条信号必须可回溯到 URL
+    { "platform": "V2EX", "url": "https://www.v2ex.com/t/xxxx", "note": "一句话说明这条信号证明了什么" }
+  ],
+  "status": "discovered"              // discovered|scored|scheduled|following|validated|dropped
+}
+```
+
+**状态流转（在「商机库」面板里点选即可，存本地）**：
+发现 `discovered` → 打分 `scored` → 排期 `scheduled` → 跟进 `following` → 已验证 `validated` / 放弃 `dropped`。
+
+同一商机在后续期数里再次出现时，保持 `id` 一致，`商机库` 会把它和上期并排比较，便于判断"这个方向几个月后还成不成立"——这就是闭环的复利来源。

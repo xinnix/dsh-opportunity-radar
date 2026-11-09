@@ -9,13 +9,86 @@
     "keywords": ["痛点", "数字产品", "独立开发者", "付费意愿"],
     "notes": "本次 Reddit / Product Hunt 访问受限，小红书、知乎、微信生态未覆盖。"
   },
+  "coverage": "V2EX、Hacker News、Indie Hackers；Reddit、Product Hunt、小红书、知乎、微信未覆盖",
   "candidates": [
-    { "code": "C", "name": "社群需求雷达", "score": 19, "verdict": "优先验证" },
-    { "code": "A", "name": "邮件送达诊断", "score": 19, "verdict": "轻量 MVP" },
-    { "code": "F", "name": "服务 + 工具组合", "score": 21, "verdict": "验证路径" },
-    { "code": "E", "name": "轻量转化漏斗", "score": 16, "verdict": "先访谈" },
-    { "code": "B", "name": "隐私 API 客户端", "score": 14, "verdict": "找差异化再说" },
-    { "code": "D", "name": "跨模型个人上下文", "score": 14, "verdict": "平台风险高" }
-  ],
-  "coverage": "V2EX、Hacker News、Indie Hackers；Reddit、Product Hunt、小红书、知乎、微信未覆盖"
+    {
+      "id": "C",
+      "name": "社群需求雷达",
+      "verdict": "优先验证",
+      "product": "按平台/关键词持续扫描社群，从真实求助帖里发现可产品化的需求，并给出可行性初判。",
+      "why": "开发者社群求助信号真实、付费方与痛点承受者为同一人；与本体插件同源能力可复用。",
+      "risk": "样本偏向开发者社群；社区讨论热度不等于付费意愿，需访谈二次验证。",
+      "scores": { "demand": 5, "competition": 4, "feasibility": 4, "monetization": 3, "solo": 4 },
+      "evidence": [
+        { "platform": "V2EX", "url": "https://www.v2ex.com/go/create", "note": "分享创造节点持续出现自建小工具" },
+        { "platform": "Indie Hackers", "url": "https://www.indiehackers.com/", "note": "有产品没付费客户是高频抱怨" }
+      ],
+      "status": "scored"
+    },
+    {
+      "id": "A",
+      "name": "邮件送达诊断",
+      "verdict": "轻量 MVP",
+      "product": "检查域名 SPF/DKIM/DMARC 与发信配置，诊断注册/验证邮件为何收不到。",
+      "why": "独立开发者不懂邮件送达 DNS 配置，出问题无从下手，痛点具体。",
+      "risk": "已有 MXToolbox 等成熟免费替代；差异化需靠'中文向导+一键修复建议'。",
+      "scores": { "demand": 4, "competition": 3, "feasibility": 5, "monetization": 2, "solo": 5 },
+      "evidence": [
+        { "platform": "V2EX", "url": "https://www.v2ex.com/t/1255322", "note": "用户反馈一周收不到注册邮件，换 SMTP 也不行" }
+      ],
+      "status": "scored"
+    },
+    {
+      "id": "F",
+      "name": "服务 + 工具组合",
+      "verdict": "验证路径",
+      "product": "先用人工代做交付商机调研/诊断，再把重复环节沉淀成工具，服务带工具订阅。",
+      "why": "人工交付能最快验证付费意愿，工具沉淀构建长期壁垒，符合'慢就是快'。",
+      "risk": "人力交付不可规模化；需明确哪些环节留人工、哪些自动化。",
+      "scores": { "demand": 4, "competition": 4, "feasibility": 3, "monetization": 5, "solo": 3 },
+      "evidence": [
+        { "platform": "Indie Hackers", "url": "https://www.indiehackers.com/", "note": "多位作者主张先人工交付再让用户付费" }
+      ],
+      "status": "discovered"
+    },
+    {
+      "id": "E",
+      "name": "轻量转化漏斗",
+      "verdict": "先访谈",
+      "product": "给个人/小团队一个极轻的转化漏斗，看清用户在哪一步流失。",
+      "why": "有开发者'28 次下载 0 销售'却看不出流失点，主流工具偏重。",
+      "risk": "可能只是个别样本；埋点与隐私合规是前置成本。",
+      "scores": { "demand": 3, "competition": 3, "feasibility": 3, "monetization": 3, "solo": 4 },
+      "evidence": [
+        { "platform": "Indie Hackers", "url": "https://www.indiehackers.com/", "note": "28 次下载、0 销售，看不出流失环节" }
+      ],
+      "status": "discovered"
+    },
+    {
+      "id": "B",
+      "name": "隐私 API 客户端",
+      "verdict": "找差异化再说",
+      "product": "不联网、无账号、无遥测、可迁移的 API 调试工具。",
+      "why": "Postman 代理请求引发隐私担忧，开发者想要干净可迁移的替代。",
+      "risk": "Bruno/Yaak/Hurl 已占位且免费开源，正面竞争空间极小。",
+      "scores": { "demand": 3, "competition": 1, "feasibility": 4, "monetization": 2, "solo": 4 },
+      "evidence": [
+        { "platform": "Hacker News", "url": "https://news.ycombinator.com/item?id=50360947", "note": "Postman 代理请求引发隐私质疑，1084 分大讨论" }
+      ],
+      "status": "scored"
+    },
+    {
+      "id": "D",
+      "name": "跨模型个人上下文",
+      "verdict": "平台风险高",
+      "product": "不依赖单一模型或软件，沉淀可随使用成长的个人上下文与编码规范。",
+      "why": "AI 时代个人记忆如何跨模型迁移是真实焦虑。",
+      "risk": "模型厂商会亲自吞并该能力；没有通用解，标准未定。",
+      "scores": { "demand": 3, "competition": 2, "feasibility": 2, "monetization": 2, "solo": 2 },
+      "evidence": [
+        { "platform": "V2EX", "url": "https://www.v2ex.com/t/1255343", "note": "如何不依赖单一模型沉淀个人上下文" }
+      ],
+      "status": "scored"
+    }
+  ]
 }
