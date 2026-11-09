@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Opportunity radar",
+    "description": "Reusable product-opportunity research workflow: collect pain points across platforms, score feasibility, and generate a report page. Adds a /radar command and a sidebar panel."
+  }
+}

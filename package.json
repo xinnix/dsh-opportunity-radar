@@ -1,0 +1,50 @@
+{
+  "name": "@xinnix/dsh-opportunity-radar",
+  "version": "1.0.0",
+  "private": false,
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./report": "./report.html",
+    "./workflow": "./WORKFLOW.md"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "build-archive.mjs",
+    "locale/*.json",
+    "icon.svg",
+    "report.html",
+    "WORKFLOW.md",
+    "README.md",
+    "reports/**/*"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  },
+  "description": "Reusable product-opportunity research workflow: collect pain points across platforms, score feasibility, and keep an archive of reports with per-issue options.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xinnix/dsh-opportunity-radar.git"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "research",
+    "opportunity",
+    "report"
+  ]
+}

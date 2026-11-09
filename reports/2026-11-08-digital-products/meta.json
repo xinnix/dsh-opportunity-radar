@@ -1,0 +1,21 @@
+{
+  "title": "数字产品商机报告",
+  "date": "2026-11-08",
+  "topic": "可以用一个数字产品解决的问题",
+  "summary": "从 V2EX、Hacker News、Indie Hackers 发现 6 个候选，优先验证社群需求雷达。",
+  "config": {
+    "topic": "可以用一个数字产品解决的问题",
+    "platforms": ["V2EX", "Hacker News", "Indie Hackers"],
+    "keywords": ["痛点", "数字产品", "独立开发者", "付费意愿"],
+    "notes": "本次 Reddit / Product Hunt 访问受限，小红书、知乎、微信生态未覆盖。"
+  },
+  "candidates": [
+    { "code": "C", "name": "社群需求雷达", "score": 19, "verdict": "优先验证" },
+    { "code": "A", "name": "邮件送达诊断", "score": 19, "verdict": "轻量 MVP" },
+    { "code": "F", "name": "服务 + 工具组合", "score": 21, "verdict": "验证路径" },
+    { "code": "E", "name": "轻量转化漏斗", "score": 16, "verdict": "先访谈" },
+    { "code": "B", "name": "隐私 API 客户端", "score": 14, "verdict": "找差异化再说" },
+    { "code": "D", "name": "跨模型个人上下文", "score": 14, "verdict": "平台风险高" }
+  ],
+  "coverage": "V2EX、Hacker News、Indie Hackers；Reddit、Product Hunt、小红书、知乎、微信未覆盖"
+}
